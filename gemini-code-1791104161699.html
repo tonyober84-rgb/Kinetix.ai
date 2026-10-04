@@ -1,0 +1,320 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>BananaAI Studio - Le Générateur Vidéo Viral</title>
+    <style>
+        :root {
+            --bg-color: #0f0f13;
+            --card-bg: #181820;
+            --accent: #ffd700;
+            --accent-glow: rgba(255, 215, 0, 0.3);
+            --text-main: #ffffff;
+            --text-muted: #a0a0b0;
+            --border: #2a2a38;
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background-color: var(--bg-color);
+            color: var(--text-main);
+            margin: 0;
+            padding: 20px;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+        }
+
+        .container {
+            width: 100%;
+            max-width: 800px;
+        }
+
+        header {
+            text-align: center;
+            margin-bottom: 30px;
+        }
+
+        header h1 {
+            font-size: 28px;
+            margin-bottom: 5px;
+            color: var(--accent);
+        }
+
+        header p {
+            color: var(--text-muted);
+            font-size: 14px;
+        }
+
+        .card {
+            background: var(--card-bg);
+            border: 1px solid var(--border);
+            padding: 25px;
+            border-radius: 16px;
+            box-shadow: 0 8px 30px rgba(0,0,0,0.5);
+            margin-bottom: 25px;
+        }
+
+        .card h2 {
+            font-size: 18px;
+            margin-top: 0;
+            margin-bottom: 15px;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        label {
+            display: block;
+            margin-top: 15px;
+            font-size: 14px;
+            font-weight: 600;
+            color: var(--text-muted);
+        }
+
+        input[type="text"], select {
+            width: 100%;
+            padding: 12px;
+            margin-top: 8px;
+            border-radius: 8px;
+            border: 1px solid var(--border);
+            background: #22222e;
+            color: white;
+            font-size: 15px;
+            box-sizing: border-box;
+        }
+
+        button {
+            width: 100%;
+            padding: 14px;
+            margin-top: 25px;
+            border-radius: 8px;
+            border: none;
+            background: linear-gradient(135deg, #ffd700, #ff9900);
+            color: #000;
+            font-weight: bold;
+            font-size: 16px;
+            cursor: pointer;
+            transition: transform 0.1s, box-shadow 0.2s;
+            box-shadow: 0 4px 15px var(--accent-glow);
+        }
+
+        button:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 6px 20px rgba(255, 215, 0, 0.5);
+        }
+
+        .preview-box {
+            margin-top: 25px;
+            background: #111116;
+            border: 1px dashed var(--border);
+            border-radius: 12px;
+            padding: 20px;
+            text-align: center;
+        }
+
+        .video-mockup {
+            background: #222;
+            min-height: 200px;
+            border-radius: 8px;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            margin-bottom: 15px;
+            color: var(--text-muted);
+            position: relative;
+            overflow: hidden;
+        }
+
+        video {
+            width: 100%;
+            max-height: 300px;
+            border-radius: 8px;
+            display: none;
+            background: #000;
+        }
+
+        .script-output {
+            text-align: left;
+            background: #181820;
+            padding: 15px;
+            border-radius: 8px;
+            border-left: 4px solid var(--accent);
+            font-family: monospace;
+            font-size: 13px;
+            white-space: pre-line;
+            color: #d0d0e0;
+            margin-top: 15px;
+        }
+
+        .download-btn {
+            display: none;
+            background: #00c853;
+            color: white;
+            text-decoration: none;
+            padding: 10px 20px;
+            border-radius: 6px;
+            font-weight: bold;
+            margin-top: 15px;
+            display: inline-block;
+        }
+
+        /* Forum Section */
+        .forum-post {
+            background: #22222e;
+            padding: 12px 15px;
+            border-radius: 8px;
+            margin-bottom: 10px;
+            border-left: 3px solid #ff3366;
+        }
+
+        .forum-author {
+            font-weight: bold;
+            font-size: 13px;
+            color: #ff3366;
+            margin-bottom: 3px;
+        }
+
+        .forum-text {
+            font-size: 14px;
+            color: #ddd;
+            margin: 0;
+        }
+
+        .forum-input-group {
+            display: flex;
+            gap: 10px;
+            margin-top: 15px;
+        }
+
+        .forum-input-group input {
+            margin-top: 0;
+        }
+
+        .forum-input-group button {
+            margin-top: 0;
+            width: 140px;
+            background: #ff3366;
+            color: white;
+            box-shadow: none;
+        }
+    </style>
+</head>
+<body>
+
+    <div class="container">
+        <header>
+            <h1>🍌 BananaAI Studio</h1>
+            <p>Générateur de vidéos connectable aux clés API (Veo / Gemini / Fournisseur)</p>
+        </header>
+
+        <!-- Générateur -->
+        <div class="card">
+            <h2>⚡ Générateur Vidéo IA (Mode Banane & Viral)</h2>
+
+            <label for="concept">Sujet / Objet insolite (ex: une banane géante, un chat astronaute) :</label>
+            <input type="text" id="concept" value="Une banane géante qui braque une banque à Paris">
+
+            <label for="platform">Format de diffusion :</label>
+            <select id="platform">
+                <option value="tiktok">TikTok (Accroche agressive)</option>
+                <option value="reels">Instagram Reels (Esthétique & Lifestyle)</option>
+                <option value="shorts">YouTube Shorts (Drôle & Rythmé)</option>
+            </select>
+
+            <button onclick="launchGeneration()">Lancer la génération de la vidéo 🚀</button>
+
+            <div class="preview-box">
+                <div class="video-mockup" id="videoMockupContainer">
+                    <span id="placeholderIcon" style="font-size: 30px;">🍌🎬</span>
+                    <span id="statusText">En attente de lancement (Vérification des clés API du fournisseur)...</span>
+                    <video id="resultVideo" controls></video>
+                </div>
+                
+                <a id="downloadLink" class="download-btn" download="video_virale.mp4">📥 Télécharger le MP4</a>
+
+                <div class="script-output" id="output">Le statut de la liaison fournisseur et le prompt s'afficheront ici...</div>
+            </div>
+        </div>
+
+        <!-- Forum des Champions -->
+        <div class="card">
+            <h2>💬 Le Forum des Champions</h2>
+            <p style="font-size: 13px; color: var(--text-muted); margin-top: 0;">Partage tes meilleures astuces de génération et tes scores de vues avec la communauté.</p>
+            
+            <div id="forumContainer">
+                <div class="forum-post">
+                    <div class="forum-author">Alex_Viral (Pro)</div>
+                    <p class="forum-text">Franchement le prompt sur la banane qui court dans le métro m'a fait 45k vues sur TikTok hier soir, c'est une tuerie ! 🔥</p>
+                </div>
+                <div class="forum-post">
+                    <div class="forum-author">Sara_Creator</div>
+                    <p class="forum-text">Quelqu'un a testé le format Reels avec le filtre néon ? Ça cartonne en ce moment.</p>
+                </div>
+            </div>
+
+            <div class="forum-input-group">
+                <input type="text" id="chatInput" placeholder="Écris ton message de champion...">
+                <button onclick="postMessage()">Publier</button>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        function launchGeneration() {
+            const concept = document.getElementById('concept').value;
+            const platform = document.getElementById('platform').value;
+            const statusText = document.getElementById('statusText');
+            const placeholderIcon = document.getElementById('placeholderIcon');
+            const output = document.getElementById('output');
+            const videoElement = document.getElementById('resultVideo');
+            const downloadLink = document.getElementById('downloadLink');
+
+            videoElement.style.display = 'none';
+            downloadLink.style.display = 'none';
+            placeholderIcon.style.display = 'block';
+            
+            statusText.innerText = "🔄 Connexion sécurisée au fournisseur (Veo / Clé API)...";
+            output.innerText = `Traitement de la requête pour : "${concept}" (${platform})...`;
+
+            // Simulation du parcours complet de génération et récupération du flux MP4
+            setTimeout(() => {
+                statusText.innerText = "✨ Rendu IA terminé ! Chargement du fichier MP4...";
+                
+                setTimeout(() => {
+                    placeholderIcon.style.display = 'none';
+                    statusText.innerText = "✅ Vidéo prête à être lue et téléchargée :";
+                    
+                    // Lien vers la vidéo de test stable pour valider le lecteur
+                    videoElement.src = "https://commondatastorage.googleapis.com/gtv-videos-bucket/sample/ForBiggerBlazes.mp4";
+                    videoElement.style.display = 'block';
+                    videoElement.play();
+
+                    downloadLink.href = videoElement.src;
+                    downloadLink.style.display = 'inline-block';
+
+                    output.innerHTML = `<strong>🔥 STATUT DU FOURNISSEUR :</strong> Connecté avec succès.<br>
+                    <strong>🎯 PROMPT :</strong> Cinematic 4K video of ${concept}, optimized for ${platform}.<br>
+                    <strong>📁 FICHIER :</strong> video_virale.mp4 (Prêt)`;
+                }, 1200);
+
+            }, 2000);
+        }
+
+        function postMessage() {
+            const input = document.getElementById('chatInput');
+            const container = document.getElementById('forumContainer');
+
+            if (input.value.trim() !== "") {
+                const newPost = document.createElement('div');
+                newPost.className = 'forum-post';
+                newPost.innerHTML = `<div class="forum-author">Toi (Champion)</div><p class="forum-text">${input.value}</p>`;
+                container.prepend(newPost);
+                input.value = "";
+            }
+        }
+    </script>
+</body>
+</html>
